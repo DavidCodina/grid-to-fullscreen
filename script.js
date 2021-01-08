@@ -40,16 +40,19 @@ function unfixInPlace(element){
 
 
 function transformToTopLeft(container, position){
+  container.style.height = '100%';
+
   if (position.top > 0){
-     container.style.transform = `translate(-${position.left}px, -${position.top}px)`;
+     container.style.transform = `translate(-${position.left}px, -${position.top}px) scale(1)`;
   } else if (position.top < 0){
-    container.style.transform = `translate(-${position.left}px, ${position.top * -1}px)`;
+    container.style.transform = `translate(-${position.left}px, ${position.top * -1}px) scale(1)`;
   }
 }
 
 
 function transformFromTopLeft(container){
-  container.style.transform = '';
+  container.style.height    = '100vw';
+  container.style.transform = `translate(0,0) scale(0.333)`;
 }
 
 
@@ -58,40 +61,29 @@ function transformFromTopLeft(container){
 ============================================================================= */
 
 
-function expand(container){
-  container.style.width        = '100%';
-  container.style.height       = '100%';
-  container.style.overflow     = 'scroll'
-  container.style.outline      = '1px solid #333';
-  container.style.zIndex       = '10000'; //This might not be enough to cover all Bootstrap z indexes.
-
-  document.body.style.overflow = 'hidden';
+function preOpen(container){
+  container.setAttribute("data-open", "");
+  container.style.width           = '100%';
+  container.style.height          = '100vw';
+  container.style.outline         = '2px solid #333';
+  container.style.transformOrigin = 'top left';
+  container.style.transform       = 'scale(0.333)';
+  container.style.zIndex          = '10000';
+  document.body.style.overflow    = 'hidden';
 }
 
 
-function contract(container){
-  container.style.width        = '';
-  container.style.height       = '';
-  container.style.overflow     = '';
-  setTimeout(function(){ container.style.outline = ''; }, 200);
-  setTimeout(function(){ container.style.zIndex = ''; }, 260);
-
-  document.body.style.overflow = '';
+function postClose(container){
+  container.style.transition      = '';
+  container.style.width           = '';
+  container.style.height          = '';
+  container.style.zIndex          = '';
+  container.style.outline         = '';
+  container.style.transform       = '';
+  container.style.transformOrigin = '';
+  document.body.style.overflow    = '';
+  container.removeAttribute('data-open');
 }
-
-
-/* =============================================================================
-
-============================================================================= */
-
-
-//You may need these for more sophisticated transitions.
-// function showContent(container){
-// }
-//
-//
-// function hideContent(container){
-// }
 
 
 /* =============================================================================
@@ -102,27 +94,25 @@ function contract(container){
 function openContainer(){
   if (this.hasAttribute('data-open')){ return; }
   const position = getPosition(this);
-  this.setAttribute("data-open", "");
-  this.style.transition = 'all 0.25s linear';
   fixInPlace(this, position);
-  transformToTopLeft(this, position);
-  expand(this);
-  //showContent(this);
+  preOpen(this);
+  //Force reflow: https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+  setTimeout(function(){
+    this.style.transition = 'all 0.5s ease-in-out'; //Can this go in transformToTopLeft ???
+    transformToTopLeft(this, position);
+  }.bind(this), 0);
 }
 
 
 function closeContainer(e){
   e.stopPropagation();
   const container = this.parentElement;
-  contract(container);
   transformFromTopLeft(container);
 
   setTimeout(function(){
+    postClose(container);
     unfixInPlace(container);
-    container.style.transition = '';
-  }, 300);
-  container.removeAttribute('data-open');
-  //hideContent(container);
+  }, 500);
 }
 
 
