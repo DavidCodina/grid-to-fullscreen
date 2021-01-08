@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:900&display=swap');
+
+
+body {
+  background-color: rgb(243,242,247);
+}
+
+main {
+  padding-bottom: 100px;
+}
+
+.fancy-h1 {
+  margin: 0;
+  padding: 0px 25px;
+  color: snow;
+  text-align: center;
+  font-size: 40px;
+  font-family: Montserrat;
+  letter-spacing: 3px;
+  line-height: 1.25;
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: violet;
+  text-shadow: -3px 3px 6px rgba(0,0,0,0.15);
+}
+
+@media only screen and (min-width: 768px) {
+  .fancy-h1 {
+    font-size: 50px;
+  }
+}
+
+.fancy-h2 {
+  margin: 0 auto 25px auto;
+  color: snow;
+  font-size: 40px;
+  font-family: Montserrat;
+  letter-spacing: 1px;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #61DAFB;
+  text-shadow: -2px 2px 4px rgba(0,0,0,0.15);
+}
+
+/* ===========================================================================
+
+=========================================================================== */
+
+
+.content-containers {
+  display:flex;
+  justify-content: center;
+}
+
+.content-container-outer {
+  width: 200px;
+  height: 200px;
+}
+
+@media only screen and (min-width: 768px) {
+  .content-container-outer {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+.content-container-inner {
+  position:relative;
+  width: inherit;
+  height: inherit;
+  cursor: pointer;
+  box-shadow: 0 0 5px #333;
+}
+
+#info-1 {
+  background-color: rgb(255,255,255);
+}
+
+#info-2 .fancy-h2 {
+  -webkit-text-stroke-color: violet;
+}
+#info-2 {
+  background-color: rgb(250,250,250);
+}
+
+#info-3 {
+  background-color: rgb(250,250,250);
+}
+#info-3 .fancy-h2 {
+  -webkit-text-stroke-color: violet;
+}
+
+#info-4 {
+  background-color: rgb(255,255,255);
+}
+
+.content-container-inner {
+  text-align:left;
+  padding: 10px;
+}
+
+.content-container-inner[data-open] {
+  padding: 25px;
+}
+
+
+/* ==========================
+
+========================== */
+
+
+.content-container-inner .btn-close {
+  display:none;
+  position: absolute; /* Should be position:fixed, but that's acting funny. May need to set programmatically */
+  top: 10px;
+  right: 10px;
+}
+
+.content-container-inner[data-open] .btn-close {
+  display:block;
+}
+
+
+.content-container-inner .btn-close:focus,
+.content-container-inner .btn-close:active {
+  box-shadow:none;
+  outline:none;
+}
+
+
+/* ==========================
+
+========================== */
+
+
+.content-container-inner > img {
+  display: block;
+  width: 50%;
+  max-width: 300px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.25);
+  transition: box-shadow 0.25s linear;
+}
+
+.content-container-inner[data-open] > img {
+  margin: 0 25px 10px 0;
+  float: left;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.25);
+}
+
+/* ==========================
+
+========================== */
+
+
+.content-container-inner .content-summary {
+  font-size: 14px;
+}
+
+@media only screen and (min-width: 768px) {
+  .content-container-inner .content-summary {
+    font-size: 16px;
+  }
+}
+
+.content-container-inner[data-open] .content-summary {
+  display:none;
+}
+
+
+/* ==========================
+
+========================== */
+
+
+.content {
+  display:none;
+}
+
+.content-container-inner[data-open] .content {
+  display:block;
+}
+
+.content p {
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.content p:last-child {
+  margin-bottom: 0px;
+}
