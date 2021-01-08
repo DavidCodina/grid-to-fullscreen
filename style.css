@@ -61,9 +61,16 @@ main {
   position:relative;
   width: inherit;
   height: inherit;
+  padding: 10px;
+  text-align:left;
   cursor: pointer;
   box-shadow: 0 0 5px #333;
   overflow:scroll;
+}
+
+.content-container-inner[data-open] {
+  padding: 30px;
+  /* aniimate back down to 25px. */
 }
 
 
@@ -87,16 +94,6 @@ main {
 
 #info-4 {
   background-color: rgb(255,255,255);
-}
-
-.content-container-inner {
-  text-align:left;
-  padding: 10px;
-}
-
-.content-container-inner[data-open] {
-  padding: 40px;
-  /* aniimate back down to 25px. */
 }
 
 
@@ -142,7 +139,8 @@ main {
 .content-container-inner[data-open] > img {
   margin: 0 40px 10px 0;
   float: left;
-  border-radius: 25px;
+  border: 3px solid #333; /* Can transition down as it increases. */
+  border-radius: 15px;
   box-shadow: 0px 3px 6px rgba(0,0,0,0.25);
 }
 
@@ -152,14 +150,14 @@ main {
 
 
 .content-container-inner .content-summary {
-  font-size: 14px;
+  font-size: 16px;
 }
 
-@media only screen and (min-width: 768px) {
+/* @media only screen and (min-width: 768px) {
   .content-container-inner .content-summary {
     font-size: 16px;
   }
-}
+} */
 
 .content-container-inner[data-open] .content-summary {
   display:none;
@@ -172,7 +170,7 @@ main {
 
 
 .content {
-  display:none;
+   display:none;
 }
 
 .content-container-inner[data-open] .content {

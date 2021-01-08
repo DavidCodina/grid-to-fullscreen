@@ -39,7 +39,7 @@ function unfixInPlace(element){
 ============================================================================= */
 
 
-function transformToTopLeft(container, position){
+function expand(container, position){
   container.style.height = '100%';
 
   if (position.top > 0){
@@ -50,7 +50,7 @@ function transformToTopLeft(container, position){
 }
 
 
-function transformFromTopLeft(container){
+function contract(container){
   container.style.height    = '100vw';
   container.style.transform = `translate(0,0) scale(0.333)`;
 }
@@ -65,7 +65,7 @@ function preOpen(container){
   container.setAttribute("data-open", "");
   container.style.width           = '100%';
   container.style.height          = '100vw';
-  container.style.outline         = '2px solid #333';
+  container.style.outline         = '1px solid #333';
   container.style.transformOrigin = 'top left';
   container.style.transform       = 'scale(0.333)';
   container.style.zIndex          = '10000';
@@ -96,10 +96,10 @@ function openContainer(){
   const position = getPosition(this);
   fixInPlace(this, position);
   preOpen(this);
-  //Force reflow: https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+  // //Force reflow: https://gist.github.com/paulirish/5d52fb081b3570c81e3a
   setTimeout(function(){
     this.style.transition = 'all 0.5s ease-in-out'; //Can this go in transformToTopLeft ???
-    transformToTopLeft(this, position);
+    expand(this, position);
   }.bind(this), 0);
 }
 
@@ -107,7 +107,7 @@ function openContainer(){
 function closeContainer(e){
   e.stopPropagation();
   const container = this.parentElement;
-  transformFromTopLeft(container);
+  contract(container);
 
   setTimeout(function(){
     postClose(container);
